@@ -4,7 +4,7 @@
 #include <cstdio>
 #include <cstdlib>
  
-#include "a.h"
+#include "test_c/a.h"
  
  
 int main() {

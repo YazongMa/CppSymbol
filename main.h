@@ -2,7 +2,7 @@
 #define __HEAD_MAIN_H__
 #include <cstdio>
  
-#include "a.h"
+#include "test_c/a.h"
  
  
 extern "C" {

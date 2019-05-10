@@ -11,7 +11,7 @@
 #//
 #////////////////////////////////////////////////////////////////////////////
 
-TARGETEXE = main.exe
+LIBNAME = test_c
 
 CC = g++
 
@@ -23,26 +23,30 @@ OBJDIR = ./obj
 
 CREATEOBJDIR = $(shell if [ -d $(OBJDIR) ]; then echo ""; else mkdir -p $(OBJDIR); fi)
 
-LIBS = -L. -ltest_c
+LIBS = 
 
 DLIBS = 
+
+INCDIRS = 
 
 #
 # objects and targets
 #
 OBJECTS = $(patsubst %.cpp,$(OBJDIR)/%.o,$(wildcard *.cpp))
 
+TARGETLIB = lib$(LIBNAME).so
+
 #
 # Rules for normal comile and link 
 #
-all:: $(TARGETEXE) 
+all:: $(TARGETLIB) 
 
-$(TARGETEXE): $(OBJECTS)
-	$(CC) -g -o $@ $^ $(DLIBS) $(LIBS)
+$(TARGETLIB): $(OBJECTS)
+	$(CC) -shared -o $(TARGETLIB) $(OBJECTS) 
 
 $(OBJECTS): $(OBJDIR)/%.o: %.cpp
 	$(CREATEOBJDIR)
-	$(CC) -c  $(FLAGS) $< -o $@
+	$(CC) -c -fpic -shared -rdynamic $(FLAGS) $< $(INCDIRS) -o $@
 
 clean:
-	rm -rf $(OBJDIR)/*.o $(TARGETEXE) 
+	rm -rf $(OBJDIR)/*.o $(TARGETLIB) 
